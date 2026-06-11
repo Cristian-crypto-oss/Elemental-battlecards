@@ -47,6 +47,14 @@ export default class EssenceManager {
     }
 
     /**
+     * Devuelve la cantidad de esencias que están activas.
+     * @returns {number}
+     */
+    get size() {
+        return Object.values(this._essences).filter(v => v === true).length;
+    }
+
+    /**
      * Devuelve un objeto con el estado actual de todas las esencias.
      * @returns {Object.<string, boolean>}
      */

@@ -29,6 +29,7 @@ export default class Player {
         this.graveyard = []; // Guardaremos los datos de las cartas, no los sprites
 
         this.turnsWithoutAttacking = 0;
+        this.onEssenceActivated = null;
     }
 
     /**
@@ -217,6 +218,25 @@ export default class Player {
             // Solo guardamos la información esencial para reconstruir la carta base.
             const baseCardId = `${cardData.type}-1`;
             this.graveyard.push({ id: baseCardId, type: cardData.type, level: 1 });
+        }
+    }
+
+    /**
+     * Activa una esencia elemental para el jugador.
+     * @param {string} essenceType El tipo de esencia (fuego, agua, etc.).
+     */
+    fillEssence(essenceType) {
+        if (!this.essences.has(essenceType)) {
+            this.essences.activate(essenceType);
+            console.log(`[Player] Esencia activada`, { playerId: this.id, essenceType, total: this.essences.size });
+            
+            if (this.onEssenceActivated) {
+                this.onEssenceActivated(this.id, essenceType);
+            } else if (this.scene && this.scene.events) {
+                this.scene.events.emit('essence-activated', this.id, essenceType);
+            }
+        } else {
+            console.log(`[Player] Esencia ya activada previamente`, { playerId: this.id, essenceType });
         }
     }
 }

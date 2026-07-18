@@ -5,11 +5,13 @@ const useSqlite = (process.env.DB_USE_SQLITE || 'false').toLowerCase() === 'true
 let sequelize;
 
 if (useSqlite) {
+    const dbPath = process.env.DB_SQLITE_PATH || './elemental_battlecards.sqlite';
     sequelize = new Sequelize({
         dialect: 'sqlite',
-        storage: ':memory:',
+        storage: dbPath,
         logging: false,
     });
+    console.log(`[DB] SQLite configurado en: ${dbPath}`);
 } else {
     const requireSSL = ((process.env.DB_REQUIRE_SSL || 'true').toString().toLowerCase() === 'true');
 

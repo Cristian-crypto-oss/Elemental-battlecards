@@ -6,6 +6,9 @@
 /.pnp
 .pnp.js
 
+# pnpm
+pnpm-lock.yaml
+
 # Carpetas de producción
 # Ignora las carpetas donde se guarda el código compilado/empaquetado.
 /build

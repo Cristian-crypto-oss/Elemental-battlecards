@@ -13,7 +13,7 @@ if (useSqlite) {
     });
     console.log(`[DB] SQLite configurado en: ${dbPath}`);
 } else {
-    const requireSSL = ((process.env.DB_REQUIRE_SSL || 'true').toString().toLowerCase() === 'true');
+    const requireSSL = ((process.env.DB_REQUIRE_SSL || 'false').toString().toLowerCase() === 'true');
 
     const dialectOptions = requireSSL
         ? { ssl: { require: true, rejectUnauthorized: false } }

@@ -1,16 +1,20 @@
 import Phaser from 'phaser';
 import PreloaderScene from './scenes/Preloader.js';
-import GameScene from './scenes/GameScene.js'; 
-import UIScene from './scenes/uiScene.js';  
+import GameScene from './scenes/GameScene.js';
 import GameSceneLAN from './scenes/GameSceneLAN.js';
+import UIScene from './scenes/uiScene.js';
 
 /**
- * Configuración de Phaser separada del flujo de Vue.
- * Las escenas de UI (LoginScene, RegisterScene, HomeScenes, CreateRoomScene)
- * han sido migradas a componentes Vue.
- * Solo mantenemos las escenas de juego en Phaser.
+ * Configuración de Phaser.
+ * 
+ * Flujo actualizado (Vue maneja todas las vistas):
+ *   - Vue: Login → Registro → Preload → MainMenu → CreateRoom
+ *   - Phaser (después de que Vue inicia el juego): Preloader → GameScene/GameSceneLAN + UIScene
+ *
+ * Las vistas (login, registro, preload, menú, creación de sala) están a cargo de Vue.
+ * Phaser solo gestiona la lógica y renderización del juego en sí.
  */
-export function initializePhaserGame() {
+export function initializePhaserGame(options = {}) {
     const config = {
         type: Phaser.AUTO,
         dom: { createContainer: true },
@@ -24,8 +28,12 @@ export function initializePhaserGame() {
         loader: {
             generateMipmap: true
         },
-        // Todas las escenas ahora están en Phaser, pero las UI están en Vue
-        scene: [ PreloaderScene, GameSceneLAN, GameScene, UIScene ]
+        scene: [
+            PreloaderScene,  // Carga assets del juego
+            GameSceneLAN,    // Juego LAN (multijugador)
+            GameScene,       // Juego vs Bot o single-player
+            UIScene          // UI del juego (overlay)
+        ]
     };
 
     const game = new Phaser.Game(config);

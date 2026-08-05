@@ -62,8 +62,8 @@ export default class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        // Fondo general
-        this.load.video('campo-video', '/assets/images/campo juego/campo.mp4', { muted: true });
+        // Fondo general - Imagen estática del campo elemental
+        this.load.image('campo-fondo', '/assets/images/campo juego/campo.jpeg');
 
         // Slots
         this.load.image('slot', '/assets/images/cartas/Espacio vacio.png');
@@ -157,15 +157,14 @@ export default class GameScene extends Phaser.Scene {
             });
         }
 
-        // Renderizar Video Fondo
-        this.board = this.add.video(width / 2, height / 2, 'campo-video').setOrigin(0.5).setDepth(-1);
-        this.board.on('play', () => {
-            const scaleX = width / this.board.width;
-            const scaleY = height / this.board.height;
-            const scale = Math.max(scaleX, scaleY);
-            this.board.setScale(scale);
-        });
-        this.board.play(true);
+        // Renderizar Fondo (Imagen estática)
+        this.board = this.add.image(width / 2, height / 2, 'campo-fondo').setOrigin(0.5).setDepth(-1);
+        
+        // Escalar la imagen para que cubra toda la pantalla manteniendo aspect ratio
+        const scaleX = width / this.board.width;
+        const scaleY = height / this.board.height;
+        const scale = Math.max(scaleX, scaleY);
+        this.board.setScale(scale);
 
         // ---------- RENDERIZAR TABLERO ----------
         // Zona del Oponente (Mano)
@@ -973,7 +972,9 @@ export default class GameScene extends Phaser.Scene {
         if (this.turnTimer) this.turnTimer.destroy();
         this.events.emit('update-timer', 0);
         this.input.enabled = false;
+        // Emitir en la escena Y en el evento global de Phaser
         this.events.emit('game-over', winner);
+        this.game.events.emit('game-over', winner);
     }
 
     /**

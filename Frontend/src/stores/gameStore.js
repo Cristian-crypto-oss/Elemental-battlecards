@@ -11,6 +11,9 @@ export const useGameStore = defineStore('game', () => {
   const playerEssences = ref({});
   const opponentEssences = ref({});
   const gameState = ref('pre-start'); // pre-start, in-progress, ended
+  const gameMode = ref(null); // 'bot' o 'lan'
+  const gameData = ref(null); // Datos del juego creado
+  const gameId = ref(null); // ID del juego a unirse
 
   const setRoomData = (data) => {
     roomData.value = data;
@@ -32,12 +35,27 @@ export const useGameStore = defineStore('game', () => {
     gameState.value = state;
   };
 
+  const setGameMode = (mode) => {
+    gameMode.value = mode;
+  };
+
+  const setGameData = (data) => {
+    gameData.value = data;
+  };
+
+  const setGameId = (id) => {
+    gameId.value = id;
+  };
+
   const reset = () => {
     roomData.value = null;
     currentTurn.value = 'player';
     playerEssences.value = {};
     opponentEssences.value = {};
     gameState.value = 'pre-start';
+    gameMode.value = null;
+    gameData.value = null;
+    gameId.value = null;
   };
 
   return {
@@ -46,11 +64,17 @@ export const useGameStore = defineStore('game', () => {
     playerEssences,
     opponentEssences,
     gameState,
+    gameMode,
+    gameData,
+    gameId,
     setRoomData,
     setCurrentTurn,
     setPlayerEssences,
     setOpponentEssences,
     setGameState,
+    setGameMode,
+    setGameData,
+    setGameId,
     reset
   };
 });

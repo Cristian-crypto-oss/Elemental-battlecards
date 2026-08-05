@@ -1,8 +1,12 @@
+import Phaser from 'phaser';
 import { CARD_TYPES as CardTypes } from '../helpers/constants.js';
 
 /**
  * Esta escena se encarga de cargar todos los recursos necesarios para el juego
  * antes de que comience. Muestra una barra de progreso durante la carga.
+ * 
+ * NOTA: No inicia ninguna otra scene automáticamente. Vue controla el flujo de vistas.
+ * Una vez que los assets están listos, la escena se queda en espera.
  */
 export default class PreloaderScene extends Phaser.Scene {
     constructor() {
@@ -49,10 +53,12 @@ export default class PreloaderScene extends Phaser.Scene {
 
     /**
      * Una vez que todos los recursos en preload() han sido cargados,
-     * este método se ejecuta y lanza la escena principal del juego.
+     * este método se ejecuta. La escena permanece en espera sin iniciar
+     * ninguna otra escena automáticamente, ya que Vue controla el flujo.
      */
     create() {
-        this.scene.start('LoginScene');
+        console.log('[PreloaderScene] Assets cargados. Esperando instrucciones de Vue.');
+        // No iniciamos ninguna escena aquí. Vue manejará el flujo de vistas.
     }
 
     /**

@@ -33,8 +33,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { useGameStore } from '../stores/gameStore.js';
 
+const gameStore = useGameStore();
 const emit = defineEmits(['preload-complete']);
 
 const progress = ref(0);
@@ -52,7 +54,17 @@ const loadingMessages = [
 const messageChangeInterval = ref(null);
 const progressInterval = ref(null);
 
+// Watcher para detectar cuando el preload está completo (Phaser terminó de cargar)
+watch(() => progress.value, (newVal) => {
+  // Cuando llegamos a 100%, la UI emite el evento
+  if (newVal >= 100) {
+    console.log('[PreloadScreen] Assets cargados al 100%');
+  }
+});
+
 onMounted(() => {
+  console.log('[PreloadScreen] Iniciando animación de preload');
+  
   // Cambiar mensaje cada 800ms
   messageChangeInterval.value = setInterval(() => {
     currentMessageIndex.value = (currentMessageIndex.value + 1) % loadingMessages.length;
@@ -75,6 +87,7 @@ onMounted(() => {
       setTimeout(() => {
         progress.value = 100;
         setTimeout(() => {
+          console.log('[PreloadScreen] Emitiendo evento preload-complete');
           clearInterval(messageChangeInterval.value);
           emit('preload-complete');
         }, 500);
@@ -88,10 +101,6 @@ const cleanup = () => {
   if (messageChangeInterval.value) clearInterval(messageChangeInterval.value);
   if (progressInterval.value) clearInterval(progressInterval.value);
 };
-
-onMounted(() => {
-  // Ya iniciado arriba
-});
 
 // Usar hook onUnmounted si está disponible
 import { onBeforeUnmount } from 'vue';

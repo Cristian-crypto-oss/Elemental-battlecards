@@ -134,11 +134,40 @@ const showConfirmPassword = ref(false);
 const isLoading = ref(false);
 const errorMessage = ref('');
 
-const API_URL = 'http://localhost:3001/api/auth/register';
+// Configuración del backend
+const getBackendUrl = () => {
+  const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+  if (params.has('backend')) return params.get('backend');
+  if (typeof window !== 'undefined' && window.BACKEND_URL) return window.BACKEND_URL;
+  
+  if (typeof window !== 'undefined') {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    
+    // Si estamos en DevTunnels, usar el subdominio correcto para el puerto 3000
+    if (hostname.includes('devtunnels.ms')) {
+      // Extraer el ID del túnel (ejemplo: x5v4c69f-5173 -> x5v4c69f)
+      const parts = hostname.split('-');
+      const tunnelId = parts[0];
+      return `${protocol}//${tunnelId}-3000.use.devtunnels.ms`;
+    }
+    
+    // Para localhost o 127.0.0.1, forzar HTTP
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return `http://${hostname}:3000`;
+    }
+    
+    // Fallback: agregar puerto 3000 al hostname actual
+    return `${protocol}//${hostname}:3000`;
+  }
+  return 'http://localhost:3000';
+};
+
+const API_URL = getBackendUrl() + '/api/auth/register';
 
 // Componente montado
 onMounted(() => {
-  console.log('[RegisterForm] Componente montado');
+  console.log('[RegisterForm] Componente montado. Backend URL:', API_URL);
 });
 
 const validateForm = () => {

@@ -396,6 +396,8 @@ export default class UIScene extends Phaser.Scene {
         const backBtnZone = this.add.zone(btnX, btnY, btnWidth, btnHeight).setOrigin(0.5).setInteractive({ cursor: 'pointer' }).setDepth(104);
         // quitar efecto hover/animación para que el botón no cambie de posición ni escala al pasar el ratón
         backBtnZone.on('pointerdown', () => {
+            console.log('[UIScene] Botón "Ir al inicio" presionado');
+            
             // Limpiar modal
             overlay.destroy();
             panel.destroy();
@@ -405,13 +407,18 @@ export default class UIScene extends Phaser.Scene {
             backBtnText.destroy();
             backBtnZone.destroy();
 
-            // Detenemos las escenas de juego y UI. NO las eliminamos con .remove().
-            // Esto permite que Phaser pueda volver a iniciarlas en una nueva partida.
-            this.scene.stop('GameScene');
-            this.scene.stop('UIScene');
-
-            // Ir al menú principal (HomeScenes) PRIMERO
-            this.scene.start('HomeScenes');
+            // Emitir evento en GameScene para que Vue lo escuche
+            const gameScene = this.scene.get('GameScene');
+            if (gameScene) {
+                console.log('[UIScene] ✓ GameScene encontrada, emitiendo return-to-menu');
+                console.log('[UIScene] Evento será recibido por App.vue');
+                gameScene.events.emit('return-to-menu');
+                // También emitir en el evento global de Phaser
+                this.game.events.emit('return-to-menu');
+                console.log('[UIScene] ✓ return-to-menu EMITIDO');
+            } else {
+                console.error('[UIScene] ✗ GameScene NO encontrada');
+            }
         });
     }
 

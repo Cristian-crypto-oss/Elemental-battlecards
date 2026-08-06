@@ -8,7 +8,7 @@ Esta guía te ayudará a configurar y jugar **Elemental Battlecards** en una red
 
 - **Node.js** versión 14 o superior instalado en ambas computadoras
 - Ambas computadoras conectadas a la **misma red local** (WiFi o Ethernet)
-- Puertos **3001** (Backend) y **5173** (Frontend) disponibles
+- Puertos **3000** (Backend) y **5173** (Frontend) disponibles
 
 ---
 
@@ -26,11 +26,12 @@ npm install
 Verifica que el archivo `Backend/.env` existe con la configuración correcta:
 
 ```env
-PORT=3001
-NODE_ENV=development
-DB_DIALECT=sqlite
-JWT_SECRET=your_jwt_secret_key_here
-CORS_ORIGIN=*
+PORT=3000
+DB_USE_SQLITE=true
+DB_SQLITE_PATH=./elemental_battlecards.sqlite
+JWT_SECRET=tu_secreto_super_secreto_y_largo
+USE_HTTPS=false
+FORCE_HTTP=false
 ```
 
 ### 3. Iniciar el Servidor Backend
@@ -42,7 +43,7 @@ npm start
 
 Deberías ver el mensaje:
 ```
-Servidor corriendo en http://0.0.0.0:3001 (escuchando todas las interfaces)
+[SERVER] Servidor escuchando en 0.0.0.0:3000
 ```
 
 ### 4. Obtener la IP Local del Servidor
@@ -127,15 +128,15 @@ Network: http://192.168.1.100:5173
 **Causa:** El Frontend no encuentra el Backend.
 
 **Solución:**
-1. Verifica que el Backend esté corriendo en el puerto 3001
+1. Verifica que el Backend esté corriendo en el puerto 3000
 2. Comprueba que ambas computadoras están en la misma red
 3. Asegúrate de usar la IP correcta del anfitrión
-4. Verifica que el firewall no bloquee los puertos 3001 y 5173
+4. Verifica que el firewall no bloquee los puertos 3000 y 5173
 
 **Para configurar el firewall en Windows:**
 ```powershell
-# Permitir puerto 3001 (Backend)
-netsh advfirewall firewall add rule name="Elemental Battlecards Backend" dir=in action=allow protocol=TCP localport=3001
+# Permitir puerto 3000 (Backend)
+netsh advfirewall firewall add rule name="Elemental Battlecards Backend" dir=in action=allow protocol=TCP localport=3000
 
 # Permitir puerto 5173 (Frontend)
 netsh advfirewall firewall add rule name="Elemental Battlecards Frontend" dir=in action=allow protocol=TCP localport=5173
@@ -218,7 +219,7 @@ npm run dev
 
 Si encuentras problemas:
 1. Verifica los logs de la consola (F12 en el navegador)
-2. Comprueba que el Backend esté corriendo (`http://[IP]:3001/ping`)
+2. Comprueba que el Backend esté corriendo (`http://[IP]:3000/ping`)
 3. Revisa que ambas máquinas estén en la misma red local
 
 ---
@@ -226,3 +227,55 @@ Si encuentras problemas:
 ## 🎉 ¡Disfruta el Juego!
 
 ¡Ahora estás listo para disfrutar de **Elemental Battlecards** en LAN con tus amigos!
+
+
+---
+
+## ⚠️ Notas Técnicas
+
+### Puertos Utilizados
+- **Backend:** Puerto 3000 (HTTP)
+- **Frontend:** Puerto 5173 (Vite dev server)
+
+### Configuración del Socket
+
+**IMPORTANTE:** El frontend se conecta automáticamente al backend detectando la URL desde la cual se accede:
+
+- **Host (anfitrión):** Si accedes desde `http://localhost:5173` → Backend: `http://localhost:3000` ✅
+- **Invitado (guest):** Si accedes desde `http://192.168.1.12:5173` → Backend: `http://192.168.1.12:3000` ✅
+
+**Esto significa que el frontend y backend DEBEN estar en la misma máquina.**
+
+### ⚠️ Problema Común: "Se queda uniéndose"
+
+Si el invitado ingresa el código y se queda en "Uniéndose...", probablemente es porque:
+
+1. **El backend no está accesible desde la IP del invitado**
+   - Verifica que el firewall permita las conexiones (ver comandos arriba)
+   - Prueba hacer ping: `ping 192.168.1.12`
+   - Prueba acceder manualmente: Abre `http://192.168.1.12:3000/ping` en el navegador del invitado
+
+2. **El backend está corriendo solo en localhost**
+   - El archivo `server.js` debe escuchar en `0.0.0.0` (todas las interfaces)
+   - Verifica en los logs del backend: `[SERVER] Servidor escuchando en 0.0.0.0:3000`
+
+3. **Puerto bloqueado**
+   - Ejecuta los comandos del firewall (ver sección de Solución de Problemas)
+
+### Verificación Rápida (Invitado)
+
+Antes de intentar unirte a una sala, abre la consola del navegador (F12) y verifica:
+
+```
+[RoomCreateModal] ✅ Socket conectado exitosamente! ID: xxxxx
+[RoomCreateModal] Backend URL: http://192.168.1.12:3000
+```
+
+Si ves `❌ Error de conexión`, el backend no es accesible desde esa IP.
+
+### Sistema de Salas
+- Las salas se identifican con códigos de 6 dígitos numéricos
+- Máximo 2 jugadores por sala
+- El anfitrión (host) siempre es el Jugador 1
+- El invitado (guest) siempre es el Jugador 2
+- Las salas se eliminan automáticamente cuando ambos jugadores se desconectan

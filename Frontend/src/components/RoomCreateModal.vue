@@ -82,9 +82,10 @@
         <!-- Panel derecho: Unirse a Sala -->
         <section class="panel join-room-panel">
           <h2>Unirse a sala</h2>
-          <p>Ingresa el código que te compartieron.</p>
+          <p v-if="!hasJoinedRoom">Ingresa el código que te compartieron.</p>
+          <p v-else class="success-text">✅ ¡Unido exitosamente! Esperando que el anfitrión inicie...</p>
 
-          <div class="join-form">
+          <div class="join-form" v-if="!hasJoinedRoom">
             <input 
               v-model="joinCode" 
               type="text" 
@@ -101,6 +102,12 @@
             >
               {{ isJoiningRoom ? 'Uniéndose...' : 'Unirse a sala' }}
             </button>
+          </div>
+
+          <!-- Mostrar código de sala cuando el guest se une -->
+          <div v-else class="room-code-display">
+            <div class="code-box">{{ formattedRoomCode }}</div>
+            <p class="info-text">Esperando al anfitrión...</p>
           </div>
 
           <!-- Mensaje de error -->
@@ -135,6 +142,7 @@ const copyButtonText = ref('Copiar código');
 const joinCode = ref('');
 const isJoiningRoom = ref(false);
 const joinErrorMessage = ref('');
+const hasJoinedRoom = ref(false); // Nueva variable para indicar que el guest se unió
 
 // Socket.io
 let socket = null;
@@ -142,29 +150,45 @@ let socket = null;
 // Configuración del backend
 const getBackendUrl = () => {
   const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
-  if (params.has('backend')) return params.get('backend');
-  if (typeof window !== 'undefined' && window.BACKEND_URL) return window.BACKEND_URL;
+  if (params.has('backend')) {
+    console.log('[RoomCreateModal] Backend URL desde parámetro:', params.get('backend'));
+    return params.get('backend');
+  }
+  if (typeof window !== 'undefined' && window.BACKEND_URL) {
+    console.log('[RoomCreateModal] Backend URL desde window.BACKEND_URL:', window.BACKEND_URL);
+    return window.BACKEND_URL;
+  }
   
   if (typeof window !== 'undefined') {
     const protocol = window.location.protocol;
     const hostname = window.location.hostname;
+    
+    console.log('[RoomCreateModal] Detectando backend - protocol:', protocol, 'hostname:', hostname);
     
     // Si estamos en DevTunnels, usar el subdominio correcto para el puerto 3000
     if (hostname.includes('devtunnels.ms')) {
       // Extraer el ID del túnel (ejemplo: x5v4c69f-5173 -> x5v4c69f)
       const parts = hostname.split('-');
       const tunnelId = parts[0];
-      return `${protocol}//${tunnelId}-3000.use.devtunnels.ms`;
+      const backendUrl = `${protocol}//${tunnelId}-3000.use.devtunnels.ms`;
+      console.log('[RoomCreateModal] Backend URL (DevTunnels):', backendUrl);
+      return backendUrl;
     }
     
     // Para localhost o 127.0.0.1, forzar HTTP
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
-      return `http://${hostname}:3000`;
+      const backendUrl = `http://${hostname}:3000`;
+      console.log('[RoomCreateModal] Backend URL (localhost):', backendUrl);
+      return backendUrl;
     }
     
-    // Fallback: agregar puerto 3000 al hostname actual
-    return `${protocol}//${hostname}:3000`;
+    // Para LAN (192.168.x.x, 10.x.x.x, etc.) - usar el mismo hostname con puerto 3000
+    // IMPORTANTE: El frontend y backend deben estar en la misma máquina o red
+    const backendUrl = `http://${hostname}:3000`;
+    console.log('[RoomCreateModal] Backend URL (LAN - mismo host):', backendUrl);
+    return backendUrl;
   }
+  console.log('[RoomCreateModal] Backend URL (fallback):', 'http://localhost:3000');
   return 'http://localhost:3000';
 };
 
@@ -179,12 +203,34 @@ onMounted(() => {
   console.log('[RoomCreateModal] Componente montado');
   
   const backendUrl = getBackendUrl();
-  console.log('Conectando a backend:', backendUrl);
+  console.log('[RoomCreateModal] ====================================');
+  console.log('[RoomCreateModal] Conectando a backend:', backendUrl);
+  console.log('[RoomCreateModal] Frontend URL:', window.location.href);
+  console.log('[RoomCreateModal] ====================================');
   
-  socket = io(backendUrl);
+  socket = io(backendUrl, {
+    transports: ['websocket', 'polling'],
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000,
+    timeout: 10000
+  });
 
   socket.on('connect', () => {
-    console.log('[RoomCreateModal] Socket conectado:', socket.id);
+    console.log('[RoomCreateModal] ✅ Socket conectado exitosamente! ID:', socket.id);
+    console.log('[RoomCreateModal] Backend URL:', backendUrl);
+  });
+
+  socket.on('connect_error', (error) => {
+    console.error('[RoomCreateModal] ❌ Error de conexión:', error.message);
+    console.error('[RoomCreateModal] Backend URL intentada:', backendUrl);
+    console.error('[RoomCreateModal] Verifica que el backend esté corriendo en:', backendUrl);
+    errorMessage.value = `No se puede conectar al servidor: ${backendUrl}`;
+    joinErrorMessage.value = `No se puede conectar al servidor: ${backendUrl}`;
+  });
+
+  socket.on('disconnect', (reason) => {
+    console.warn('[RoomCreateModal] ⚠️ Socket desconectado. Razón:', reason);
   });
 
   socket.on('room_created', ({ code, role }) => {
@@ -209,18 +255,29 @@ onMounted(() => {
   });
 
   socket.on('game_start', (data) => {
-    console.log('[RoomCreateModal] Juego iniciando...', data);
+    console.log('[RoomCreateModal] ✅ Juego iniciando...', data);
     isStartingGame.value = false;
+    
+    // Determinar el rol basado en el socket ID
+    let playerRole = 'host';
+    if (data.guestId && data.guestId === socket.id) {
+      playerRole = 'guest';
+    } else if (data.hostId && data.hostId === socket.id) {
+      playerRole = 'host';
+    }
+    
+    console.log('[RoomCreateModal] Mi rol:', playerRole, '(Socket ID:', socket.id, ')');
     
     const roomData = {
       roomCode: roomCode.value,
       socket: socket,
       playerData: authStore.user,
-      playerRole: 'host',
+      playerRole: playerRole,
       gameStartData: data,
       isLAN: true
     };
     
+    console.log('[RoomCreateModal] Emitiendo room-created con roomData:', roomData);
     emit('room-created', roomData);
   });
 
@@ -232,12 +289,11 @@ onMounted(() => {
   });
 });
 
-// Limpiar socket al desmontar
+// Limpiar socket al desmontar SOLO si no se está usando en el juego
 onBeforeUnmount(() => {
-  if (socket) {
-    console.log('[RoomCreateModal] Desconectando socket');
-    socket.disconnect();
-  }
+  // NO desconectar el socket aquí porque se pasa al juego
+  // El juego será responsable de gestionar la conexión
+  console.log('[RoomCreateModal] Componente desmontado (socket se mantiene para el juego)');
 });
 
 // Métodos
@@ -302,7 +358,19 @@ const startGame = () => {
 };
 
 const joinRoom = () => {
-  if (isJoiningRoom.value || !socket || !joinCode.value.trim()) return;
+  if (!socket) {
+    joinErrorMessage.value = 'Socket no conectado. Verifica la conexión al servidor.';
+    console.error('[RoomCreateModal] Socket no está disponible');
+    return;
+  }
+  
+  if (!socket.connected) {
+    joinErrorMessage.value = 'Esperando conexión al servidor...';
+    console.warn('[RoomCreateModal] Socket no está conectado aún');
+    return;
+  }
+  
+  if (isJoiningRoom.value || !joinCode.value.trim()) return;
   
   const code = joinCode.value.replace(/\s+/g, '');
   
@@ -314,23 +382,43 @@ const joinRoom = () => {
   isJoiningRoom.value = true;
   joinErrorMessage.value = '';
   
+  console.log('[RoomCreateModal] ====================================');
   console.log('[RoomCreateModal] Intentando unirse a sala:', code);
+  console.log('[RoomCreateModal] Socket ID:', socket.id);
+  console.log('[RoomCreateModal] Socket conectado:', socket.connected);
+  console.log('[RoomCreateModal] ====================================');
+  
+  // Timeout de seguridad por si no hay respuesta
+  const timeoutId = setTimeout(() => {
+    if (isJoiningRoom.value) {
+      console.error('[RoomCreateModal] ⏱️ Timeout al unirse a la sala');
+      joinErrorMessage.value = 'Tiempo de espera agotado. Verifica el código y la conexión.';
+      isJoiningRoom.value = false;
+    }
+  }, 10000);
   
   socket.emit('join_room', { code }, (response) => {
+    clearTimeout(timeoutId);
+    
+    console.log('[RoomCreateModal] Respuesta de join_room:', response);
+    
     if (response && response.success) {
-      console.log('[RoomCreateModal] Unido a sala exitosamente:', response.code);
+      console.log('[RoomCreateModal] ✅ Unido a sala exitosamente:', response.code);
+      console.log('[RoomCreateModal] Esperando evento game_start...');
       
-      const roomData = {
-        roomCode: response.code,
-        socket: socket,
-        playerData: authStore.user,
-        playerRole: 'guest',
-        isLAN: true
-      };
+      // NO emitir 'room-created' aquí
+      // Esperar a que llegue el evento 'game_start' del servidor
+      isJoiningRoom.value = false;
+      hasJoinedRoom.value = true; // Indicar que nos unimos exitosamente
       
-      emit('room-created', roomData);
+      // Actualizar el UI para mostrar que estamos esperando
+      joinErrorMessage.value = '';
+      joinCode.value = ''; // Limpiar el input
+      
+      // Guardar el código de sala para cuando llegue game_start
+      roomCode.value = response.code;
     } else {
-      console.error('[RoomCreateModal] Error al unirse a sala:', response);
+      console.error('[RoomCreateModal] ❌ Error al unirse a sala:', response);
       joinErrorMessage.value = response?.message || 'No se pudo unir a la sala';
       isJoiningRoom.value = false;
     }
@@ -629,6 +717,20 @@ const joinRoom = () => {
   color: #ff6b6b;
   font-size: 13px;
   text-align: center;
+}
+
+/* Mensajes de éxito e info */
+.success-text {
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.info-text {
+  margin: 12px 0 0 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-style: italic;
 }
 
 /* Responsive */

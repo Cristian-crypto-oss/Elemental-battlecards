@@ -102,6 +102,7 @@
 import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
 import { useAuthStore } from './stores/authStore.js';
 import { useGameStore } from './stores/gameStore.js';
+import { usePlayerProfile } from './composables/usePlayerProfile.js';
 
 // Componentes Vue
 import PreloadScreen from './components/PreloadScreen.vue';
@@ -121,6 +122,7 @@ import { initializePhaserGame } from './phaser-main.js';
 // Stores
 const authStore = useAuthStore();
 const gameStore = useGameStore();
+const { initializeProfile, setUsername, resetProfile } = usePlayerProfile();
 
 // Estado actual de la pantalla
 const currentScreen = ref('login');
@@ -184,6 +186,21 @@ const initPreloader = () => {
 const handleLoginSuccess = (userData) => {
   console.log('[App.vue] Login exitoso:', userData);
   authStore.setUser(userData);
+  
+  // Extraer el usuario del objeto (puede venir como userData.user o directamente)
+  const user = userData.user || userData;
+  
+  console.log('[App.vue] Datos del usuario para inicializar perfil:', user);
+  
+  // Inicializar el perfil del jugador con los datos del usuario
+  initializeProfile({
+    username: user.username,
+    id: user.id,
+    avatar: user.avatar || '/assets/images/logo.png'
+  });
+  
+  console.log('[App.vue] Perfil del jugador inicializado con username:', user.username);
+  
   // Ir directo al menú, sin preload
   currentScreen.value = 'menu';
 };
@@ -201,7 +218,7 @@ const handlePreloadComplete = () => {
       // Iniciar GameScene en modo vs Bot
       phaserGame.scene.start('GameScene', {
         vsBot: true,
-        playerData: authStore.user
+        playerData: authStore.user?.user || authStore.user || { username: 'Jugador' }
       });
       
       // Escuchar evento de fin de juego desde el evento global de Phaser
@@ -285,7 +302,9 @@ const setupGameOverListener = () => {
 
 const handlePlayLAN = () => {
   console.log('[App.vue] Jugador seleccionó: Jugar en LAN');
-  currentScreen.value = 'juego-lan';
+  gameStore.setGameMode('lan');
+  // Ir directamente a la pantalla de crear/unirse a sala
+  currentScreen.value = 'create-room';
 };
 
 const handleJuegoLanBack = () => {
@@ -441,6 +460,10 @@ const handleLogout = () => {
   console.log('[App.vue] Usuario cerrando sesión');
   authStore.logout();
   gameStore.reset();
+  
+  // Resetear el perfil del jugador
+  resetProfile();
+  console.log('[App.vue] Perfil del jugador reseteado');
   
   // Destruir juego de Phaser si existe
   if (phaserGame) {

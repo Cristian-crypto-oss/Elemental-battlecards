@@ -25,9 +25,9 @@ export default class GameSceneLAN extends Phaser.Scene {
     } else if (typeof window !== 'undefined' && window.BACKEND_URL) {
       SERVER_URL = window.BACKEND_URL;
     } else if (typeof window !== 'undefined') {
-      SERVER_URL = `http://${location.hostname}:3001`;
+      SERVER_URL = `http://${location.hostname}:3000`;
     } else {
-      SERVER_URL = 'http://localhost:3001';
+      SERVER_URL = 'http://localhost:3000';
     }
 
     if (!this.socket) {

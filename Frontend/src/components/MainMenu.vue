@@ -30,26 +30,26 @@
               <img src="/assets/images/logo.png" alt="Avatar" />
             </div>
             <div class="user-info">
-              <h2>{{ authStore.user?.username || 'Jugador' }}</h2>
-              <span class="user-level">NIVEL 45</span>
+              <h2>{{ displayName }}</h2>
+              <span class="user-level">NIVEL {{ profile?.level || 1 }}</span>
             </div>
           </div>
           <div class="user-stats">
             <div class="stat">
               <div class="stat-icon">⚡</div>
               <div class="stat-content">
-                <span class="stat-label">DIAMANTE IV</span>
+                <span class="stat-label">{{ profile?.rank?.name || 'BRONCE I' }}</span>
                 <div class="stat-bar">
-                  <div class="stat-fill"></div>
+                  <div class="stat-fill" :style="{ width: rankProgress + '%' }"></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="stats-grid">
-            <span>Partidas jugadas</span>  <span>0</span>
-            <span>Partidas ganadas</span>  <span>0</span>
-            <span>Logros</span>            <span>0/50</span>
-            <span>Tiempo Jugado</span>     <span>0h 0m</span>
+            <span>Partidas jugadas</span>  <span>{{ profile?.stats?.matchesPlayed || 0 }}</span>
+            <span>Partidas ganadas</span>  <span>{{ profile?.stats?.matchesWon || 0 }}</span>
+            <span>Logros</span>            <span>{{ profile?.stats?.achievementsUnlocked || 0 }}/{{ profile?.stats?.totalAchievements || 50 }}</span>
+            <span>Tiempo Jugado</span>     <span>{{ formattedPlayTime }}</span>
           </div>
         </section>
 
@@ -110,8 +110,33 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useAuthStore } from '../stores/authStore.js';
+import { usePlayerProfile } from '../composables/usePlayerProfile.js';
+import playerProfileStore from '../stores/playerProfileStore.js';
 
 const authStore = useAuthStore();
+const { profile, displayName, levelProgress, rankProgress, formattedPlayTime, initializeProfile } = usePlayerProfile();
+
+// Asegurar que el perfil esté inicializado con los datos del usuario autenticado
+onMounted(() => {
+  console.log('[MainMenu] Montado. Usuario autenticado:', authStore.user);
+  console.log('[MainMenu] Estado del perfil:', profile.value);
+  console.log('[MainMenu] displayName:', displayName.value);
+  
+  // Si el perfil no tiene username pero el authStore sí, inicializar
+  if (!profile.value?.username && authStore.user?.username) {
+    console.log('[MainMenu] Inicializando perfil con datos de authStore');
+    initializeProfile({
+      username: authStore.user.username,
+      id: authStore.user.id,
+      avatar: authStore.user.avatar || '/assets/images/logo.png'
+    });
+    
+    // Forzar actualización del estado después de inicializar
+    setTimeout(() => {
+      console.log('[MainMenu] Perfil después de inicializar:', playerProfileStore.getState().profile);
+    }, 100);
+  }
+});
 
 const emit = defineEmits(['play-lan', 'play-bot', 'logout', 'view-profile']);
 

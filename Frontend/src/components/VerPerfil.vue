@@ -5,7 +5,7 @@
 
     <!-- HEADER -->
     <div class="header-top-app-bar">
-      <div class="header-top-app-bar-overlay" />
+      <div class="header-top-app-bar-overlay"></div>
       
       <div class="container-header">
         <div class="container-actions">
@@ -35,10 +35,10 @@
         <div class="perfil-content">
           <!-- Avatar y Info Principal -->
           <div class="perfil-info-main">
-            <img class="profile-avatar" src="/assets/images/logo.png" alt="Avatar" />
+            <img class="profile-avatar" :src="profile?.avatar || '/assets/images/logo.png'" alt="Avatar" />
             <div class="profile-text">
-              <h2 class="profile-name">{{ authStore.user?.username || 'Jugador' }}</h2>
-              <span class="profile-level">NIVEL 45</span>
+              <h2 class="profile-name">{{ displayName }}</h2>
+              <span class="profile-level">NIVEL {{ profile?.level || 1 }}</span>
             </div>
           </div>
 
@@ -46,11 +46,11 @@
           <div class="profile-rank-section">
             <div class="rank-icon">⚡</div>
             <div class="rank-info">
-              <span class="rank-label">RANGO: DIAMANTE IV</span>
+              <span class="rank-label">RANGO: {{ profile?.rank?.name || 'BRONCE I' }}</span>
               <div class="rank-bar">
-                <div class="rank-fill"></div>
+                <div class="rank-fill" :style="{ width: rankProgress + '%' }"></div>
               </div>
-              <span class="rank-progress">1250 / 2000 Puntos</span>
+              <span class="rank-progress">{{ profile?.rank?.points || 0 }} / {{ profile?.rank?.maxPoints || 1000 }} Puntos</span>
             </div>
           </div>
 
@@ -60,32 +60,32 @@
               <div class="stat-card">
                 <span class="stat-icon">🎮</span>
                 <span class="stat-label">Partidas Jugadas</span>
-                <span class="stat-value">0</span>
+                <span class="stat-value">{{ profile?.stats?.matchesPlayed || 0 }}</span>
               </div>
               <div class="stat-card">
                 <span class="stat-icon">🏆</span>
                 <span class="stat-label">Partidas Ganadas</span>
-                <span class="stat-value">0</span>
+                <span class="stat-value">{{ profile?.stats?.matchesWon || 0 }}</span>
               </div>
               <div class="stat-card">
                 <span class="stat-icon">⭐</span>
                 <span class="stat-label">Tasa de Victoria</span>
-                <span class="stat-value">0%</span>
+                <span class="stat-value">{{ profile?.stats?.winRate || 0 }}%</span>
               </div>
               <div class="stat-card">
                 <span class="stat-icon">⏱️</span>
                 <span class="stat-label">Tiempo Jugado</span>
-                <span class="stat-value">0h 0m</span>
+                <span class="stat-value">{{ formattedPlayTime }}</span>
               </div>
               <div class="stat-card">
                 <span class="stat-icon">🎯</span>
                 <span class="stat-label">Logros</span>
-                <span class="stat-value">0/50</span>
+                <span class="stat-value">{{ profile?.stats?.achievementsUnlocked || 0 }}/{{ profile?.stats?.totalAchievements || 50 }}</span>
               </div>
               <div class="stat-card">
                 <span class="stat-icon">💎</span>
                 <span class="stat-label">Rachas Ganadoras</span>
-                <span class="stat-value">0</span>
+                <span class="stat-value">{{ profile?.stats?.longestWinStreak || 0 }}</span>
               </div>
             </div>
           </div>
@@ -127,8 +127,11 @@
 
 <script setup>
 import { useAuthStore } from '../stores/authStore.js';
+import { usePlayerProfile } from '../composables/usePlayerProfile.js';
 
 const authStore = useAuthStore();
+const { profile, displayName, levelProgress, rankProgress, formattedPlayTime } = usePlayerProfile();
+
 const emit = defineEmits(['back', 'logout']);
 
 function handleBack() {
@@ -557,4 +560,4 @@ function handleExit() {
     justify-content: center;
   }
 }
-</style>
+</style>>

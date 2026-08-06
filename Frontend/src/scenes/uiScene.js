@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { CARD_TYPES as CardTypes } from '../helpers/constants.js';
+import playerProfileStore from '../stores/playerProfileStore.js';
 
 /**
  * La escena de la interfaz de usuario (UI) se ejecuta sobre la GameScene.
@@ -25,9 +26,22 @@ export default class UIScene extends Phaser.Scene {
     }
 
     create(data) {
-        console.log('[UIScene] Creada', { player: this.playerData?.username || 'Jugador' });
-        this.playerData = data.playerData || { username: 'Jugador' }; // Fallback por si no hay datos
-        const username = this.playerData.username;
+        // Obtener el nombre del jugador desde el store de Zustand
+        const profileState = playerProfileStore.getState();
+        let username = profileState.profile?.username;
+        
+        // Si no hay username en el store, intentar obtener de playerData
+        if (!username || username === '') {
+            username = data.playerData?.username || 'Jugador';
+        }
+        
+        console.log('[UIScene] Creada', { 
+            player: username,
+            fromStore: profileState.profile?.username,
+            fromData: data.playerData?.username 
+        });
+        
+        this.playerData = { ...data.playerData, username }; // Asegurar que tenemos el username actualizado
 
         // Obtenemos una referencia a la GameScene para comunicarnos con ella
         this.gameScene = this.scene.get('GameScene');
@@ -40,25 +54,61 @@ export default class UIScene extends Phaser.Scene {
         // ---------- BARRA SUPERIOR ----------
         const topBarY = 50; // Eje vertical central para los elementos superiores
 
-        // --- MENU HAMBURGUESA (se mantiene a la izquierda) ---
-        const hamSize = 36;
-        const hamX = 16, hamY = 14;
-        const menuBg = this.add.rectangle(hamX + 6, hamY + 6, 180, 120, 0x000000, 0.75).setOrigin(0).setDepth(1000);
-        menuBg.setVisible(false);
-        const hamburger = this.add.text(hamX, hamY + 20, '☰', { fontSize: `${hamSize}px`, color: '#fff' }).setInteractive({ useHandCursor: true }).setDepth(1000);
-        const settingsButton = this.add.text(hamX + 12, hamY + 40, '⚙ Configuración', { fontSize: '14px', color: '#fff' }).setDepth(1001).setInteractive({ useHandCursor: true }).setVisible(false);
-        const surrenderButton = this.add.text(hamX + 12, hamY + 70, '🏳 Rendirse', { fontSize: '14px', color: '#fff' }).setDepth(1001).setInteractive({ useHandCursor: true }).setVisible(false);
+        // --- BOTÓN SALIR AL MENÚ (esquina superior izquierda) ---
+        const exitBtnWidth = 160;
+        const exitBtnHeight = 40;
+        const exitBtnX = 16 + exitBtnWidth / 2;
+        const exitBtnY = 14 + exitBtnHeight / 2;
 
-        hamburger.on('pointerdown', () => {
-            const visible = !menuBg.visible;
-            menuBg.setVisible(visible);
-            settingsButton.setVisible(visible);
-            surrenderButton.setVisible(visible);
+        const exitContainer = this.add.container(exitBtnX, exitBtnY);
+        const exitBg = this.add.graphics();
+        exitBg.fillStyle(0x8B0000, 0.9); // Rojo oscuro
+        exitBg.fillRoundedRect(-exitBtnWidth / 2, -exitBtnHeight / 2, exitBtnWidth, exitBtnHeight, 10);
+        exitBg.lineStyle(2, 0xFF4444, 1); // Borde rojo
+        exitBg.strokeRoundedRect(-exitBtnWidth / 2, -exitBtnHeight / 2, exitBtnWidth, exitBtnHeight, 10);
+
+        const exitText = this.add.text(0, 0, "← Salir al Menú", { 
+            fontSize: '16px', 
+            color: '#ffffff',
+            fontFamily: 'Arial',
+            fontStyle: 'bold'
+        }).setOrigin(0.5);
+
+        exitContainer.add([exitBg, exitText]);
+        exitContainer.setSize(exitBtnWidth, exitBtnHeight).setInteractive({ cursor: 'pointer' });
+        exitContainer.setDepth(1000);
+
+        // Efecto hover
+        exitContainer.on('pointerover', () => {
+            exitBg.clear();
+            exitBg.fillStyle(0xB22222, 0.95); // Rojo más claro al pasar el mouse
+            exitBg.fillRoundedRect(-exitBtnWidth / 2, -exitBtnHeight / 2, exitBtnWidth, exitBtnHeight, 10);
+            exitBg.lineStyle(2, 0xFF6666, 1);
+            exitBg.strokeRoundedRect(-exitBtnWidth / 2, -exitBtnHeight / 2, exitBtnWidth, exitBtnHeight, 10);
         });
 
-        // botones son placeholders por ahora
-        settingsButton.on('pointerdown', () => { /* placeholder */ });
-        surrenderButton.on('pointerdown', () => { /* placeholder */ });
+        exitContainer.on('pointerout', () => {
+            exitBg.clear();
+            exitBg.fillStyle(0x8B0000, 0.9);
+            exitBg.fillRoundedRect(-exitBtnWidth / 2, -exitBtnHeight / 2, exitBtnWidth, exitBtnHeight, 10);
+            exitBg.lineStyle(2, 0xFF4444, 1);
+            exitBg.strokeRoundedRect(-exitBtnWidth / 2, -exitBtnHeight / 2, exitBtnWidth, exitBtnHeight, 10);
+        });
+
+        // Acción al hacer clic: volver al menú principal
+        exitContainer.on('pointerdown', () => {
+            console.log('[UIScene] Botón "Salir al Menú" presionado');
+            
+            const gameScene = this.scene.get('GameScene');
+            if (gameScene) {
+                console.log('[UIScene] ✓ GameScene encontrada, emitiendo return-to-menu');
+                gameScene.events.emit('return-to-menu');
+                this.game.events.emit('return-to-menu');
+                console.log('[UIScene] ✓ return-to-menu EMITIDO');
+            } else {
+                console.error('[UIScene] ✗ GameScene NO encontrada');
+            }
+        });
 
         // --- Panel central (TU vs OPONENTE) ---
         const barWidth = 360;
@@ -82,7 +132,7 @@ export default class UIScene extends Phaser.Scene {
             fontStyle: 'bold',
             shadow: { offsetX: 2, offsetY: 2, color: '#000', blur: 3, fill: true }
         };
-        this.add.text(barX + barWidth * 0.22, topBarY, 'Jugador', textStyle).setOrigin(0.5);
+        this.add.text(barX + barWidth * 0.22, topBarY, username, textStyle).setOrigin(0.5);
         this.add.text(barX + barWidth * 0.5, topBarY, "VS", { ...textStyle, fontSize: '18px', fontStyle: 'normal' }).setOrigin(0.5);
         this.add.text(barX + barWidth * 0.78, topBarY, "Oponente", textStyle).setOrigin(0.5);
 
@@ -130,7 +180,7 @@ export default class UIScene extends Phaser.Scene {
         playerCounterFrame.strokeRoundedRect(-counterWidth / 2, -counterHeight / 2, counterWidth, counterHeight, 10);
 
         this.attackCounterTexts = {};
-        this.attackCounterTexts.player = this.add.text(playerCounterX, bottomBarY, `Jugador ataque: turno 1`, bottomTextStyle).setOrigin(0.5);
+        this.attackCounterTexts.player = this.add.text(playerCounterX, bottomBarY, `${username} ataque: turno 1`, bottomTextStyle).setOrigin(0.5);
 
         // --- TEMPORIZADOR DE TURNO (Centro) ---
         const timerWidth = 200;

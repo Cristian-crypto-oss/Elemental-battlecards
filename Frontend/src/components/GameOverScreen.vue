@@ -29,12 +29,24 @@
       <!-- Estadísticas de la partida -->
       <div class="stats-section">
         <div class="stat-item">
+          <span class="stat-label">Jugador:</span>
+          <span class="stat-value">{{ displayName }}</span>
+        </div>
+        <div class="stat-item">
           <span class="stat-label">Ganador:</span>
           <span class="stat-value">{{ winner === 'player' ? 'Tú' : 'Oponente' }}</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">Modo de juego:</span>
           <span class="stat-value">{{ gameMode === 'bot' ? 'vs Bot' : 'Multijugador' }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Nivel actual:</span>
+          <span class="stat-value">{{ profile?.level || 1 }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Total de victorias:</span>
+          <span class="stat-value">{{ profile?.stats?.matchesWon || 0 }}</span>
         </div>
       </div>
 
@@ -54,11 +66,13 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useGameStore } from '../stores/gameStore.js';
+import { usePlayerProfile } from '../composables/usePlayerProfile.js';
 import SettingsButton from './SettingsButton.vue';
 
 const gameStore = useGameStore();
+const { profile, displayName, recordMatch, addExperience, addRankPoints } = usePlayerProfile();
 
 const emit = defineEmits(['return-to-menu', 'rematch', 'view-settings']);
 
@@ -77,10 +91,43 @@ const isWin = computed(() => props.winner === 'player');
 
 const resultMessage = computed(() => {
   if (props.winner === 'player') {
-    return 'Has derrotado a tu oponente y ganado la partida.';
+    return `¡Felicidades ${displayName.value || 'Jugador'}! Has derrotado a tu oponente y ganado la partida.`;
   } else {
-    return 'Tu oponente te ha derrotado. ¡Intenta nuevamente!';
+    return `${displayName.value || 'Jugador'}, tu oponente te ha derrotado. ¡Intenta nuevamente!`;
   }
+});
+
+// Actualizar estadísticas cuando se monta el componente
+onMounted(() => {
+  console.log('[GameOverScreen] Actualizando estadísticas del jugador...');
+  
+  const won = props.winner === 'player';
+  
+  // Registrar resultado de la partida
+  recordMatch({
+    won: won,
+    gameType: gameMode.value, // 'bot' o 'lan'
+    difficulty: 'medium', // TODO: obtener dificultad real del gameStore
+    duration: 0 // TODO: obtener duración real de la partida
+  });
+  
+  // Añadir experiencia y puntos de rango
+  if (won) {
+    addExperience(100); // +100 XP por ganar
+    addRankPoints(25);  // +25 puntos de rango
+    console.log('[GameOverScreen] Victoria: +100 XP, +25 puntos de rango');
+  } else {
+    addExperience(50);   // +50 XP por perder
+    addRankPoints(-10);  // -10 puntos de rango
+    console.log('[GameOverScreen] Derrota: +50 XP, -10 puntos de rango');
+  }
+  
+  console.log('[GameOverScreen] Estadísticas actualizadas:', {
+    totalPartidas: profile.value?.stats?.matchesPlayed,
+    victorias: profile.value?.stats?.matchesWon,
+    nivel: profile.value?.level,
+    experiencia: profile.value?.experience
+  });
 });
 
 // Métodos

@@ -1,0 +1,1 @@
+{"version":3,"file":"GameEventHandler.d.ts","sourceRoot":"","sources":["../../src/socket/GameEventHandler.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,MAAM,EAAE,MAAM,WAAW,CAAC;AACnC,OAAO,EAAE,gBAAgB,EAAE,MAAM,oBAAoB,CAAC;AAEtD,qBAAa,gBAAiB,SAAQ,gBAAgB;IACpD,cAAc,CAAC,MAAM,EAAE,MAAM,GAAG,IAAI;CAwBrC"}

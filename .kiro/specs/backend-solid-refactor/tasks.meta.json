@@ -1,0 +1,835 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Crear `Backend/tsconfig.json` con `\"strict\": true`, `\"target\": \"ES2020\"`, `\"module\": \"commonjs\"`, `\"outDir\": \"./dist\"`, `\"rootDir\": \"./src\"` y las demás opciones del diseño": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343007
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407349420
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407442921
+      }
+    ],
+    "1.2 Agregar dependencias TypeScript y de testing a `Backend/package.json`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343371
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407351937
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407445677
+      }
+    ],
+    "1.3 Crear el archivo de configuración de Jest `Backend/jest.config.js` con preset `ts-jest`, `testEnvironment: \"node\"` y `testMatch` apuntando a `**/__tests__/**/*.test.ts`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343693
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407355039
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407448515
+      }
+    ],
+    "2.1 Crear `Backend/src/dtos/RegisterDto.ts` con la interfaz `RegisterDto { username, email, password }`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343768
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407451669
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407797621
+      }
+    ],
+    "2.2 Crear `Backend/src/dtos/LoginDto.ts` con la interfaz `LoginDto { username?, email?, password }`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343812
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407455164
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407800340
+      }
+    ],
+    "2.3 Crear `Backend/src/dtos/AuthResponseDto.ts` con las interfaces `UserPublicDto` y `AuthResponseDto { token, user, message? }`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343852
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407457849
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407803098
+      }
+    ],
+    "3.1 Crear `Backend/src/interfaces/IUserRepository.ts` con los métodos `findByEmail`, `findByUsername` y `create`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343887
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407806206
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407858419
+      }
+    ],
+    "3.2 Crear `Backend/src/interfaces/IAuthService.ts` con los métodos `register` y `login`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343928
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407808794
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407860992
+      }
+    ],
+    "3.3 Crear `Backend/src/interfaces/IHashService.ts` con los métodos `hash` y `compare`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407343971
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407812244
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407863926
+      }
+    ],
+    "3.4 Crear `Backend/src/interfaces/ITokenService.ts` con `TokenPayload` y los métodos `sign` y `verify`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344008
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407814779
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407866645
+      }
+    ],
+    "3.5 Crear `Backend/src/interfaces/IController.ts` con el método `handle(req: Request, res: Response): Promise<void>`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344041
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407817399
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407869413
+      }
+    ],
+    "4.1 Crear `Backend/src/entities/UserEntity.ts` con atributos `private readonly _id`, `_username`, `_email`, `_passwordHash` y sus getters públicos `id`, `username`, `email`, `passwordHash`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344077
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407872735
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407950423
+      }
+    ],
+    "5.1 Crear `Backend/src/config/db.ts` que exporte la función `connectDB(): Promise<Sequelize | null>` leyendo `DB_USE_SQLITE` para elegir SQLite o PostgreSQL según las variables de entorno": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344120
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407875634
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407953707
+      }
+    ],
+    "6.1 Crear `Backend/src/models/user.ts` usando `ModelDefined<UserAttributes, UserCreationAttributes>` de Sequelize con los campos `id`, `username`, `email`, `password`, `createdAt`, `updatedAt`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344158
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407957001
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409505309
+      }
+    ],
+    "6.2 Crear `Backend/src/models/index.ts` que inicialice el modelo `User` con la instancia de Sequelize y lo exporte como `db.User`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344191
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407959738
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409508899
+      }
+    ],
+    "7.1 Crear `Backend/src/repositories/SequelizeUserRepository.ts` implementando `IUserRepository`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344225
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409512504
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409565366
+      }
+    ],
+    "7.2 Escribir tests unitarios para `SequelizeUserRepository` en `Backend/src/__tests__/unit/sequelizeUserRepository.unit.test.ts`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344260
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409574049
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409946202
+      }
+    ],
+    "8.1 Crear `Backend/src/services/BcryptHashService.ts` implementando `IHashService`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344292
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409515228
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409568089
+      }
+    ],
+    "9.1 Crear `Backend/src/services/JwtTokenService.ts` implementando `ITokenService`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344335
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409518070
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409570965
+      }
+    ],
+    "9.2 Escribir test unitario para el arranque fallido en `Backend/src/__tests__/unit/jwtTokenService.unit.test.ts`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344367
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409576874
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409950691
+      }
+    ],
+    "10.1 Crear `Backend/src/services/AuthService.ts` implementando `IAuthService`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344397
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409580640
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409953586
+      }
+    ],
+    "10.2 Escribir tests unitarios en `Backend/src/__tests__/unit/authService.unit.test.ts`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344429
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409957299
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410020173
+      }
+    ],
+    "11.1 Crear `Backend/src/controllers/RegisterController.ts` implementando `IController`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344466
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409960005
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410023322
+      }
+    ],
+    "11.2 Crear `Backend/src/controllers/LoginController.ts` implementando `IController`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344500
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409962830
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410026107
+      }
+    ],
+    "11.3 Escribir tests unitarios en `Backend/src/__tests__/unit/registerController.unit.test.ts` y `loginController.unit.test.ts`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344545
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410029533
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410100967
+      }
+    ],
+    "12.1 Crear `Backend/src/routes/authRoutes.ts` como único punto donde se instancian todas las clases concretas del módulo Auth": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344577
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410032213
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410104250
+      }
+    ],
+    "13. Punto de control — Verificar módulo Auth": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344609
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410107752
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410454165
+      }
+    ],
+    "14.1 Crear `Backend/src/socket/BaseEventHandler.ts` con la clase abstracta `BaseEventHandler`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344642
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410457183
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410502080
+      }
+    ],
+    "15.1 Crear `Backend/src/socket/RoomEventHandler.ts` extendiendo `BaseEventHandler`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344676
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410505133
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410544306
+      }
+    ],
+    "16.1 Crear `Backend/src/socket/GameEventHandler.ts` extendiendo `BaseEventHandler`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344711
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410508092
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410547515
+      }
+    ],
+    "17.1 Reescribir `Backend/src/server.ts` en TypeScript aplicando la estructura del diseño": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344753
+      },
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410551142
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412509547
+      }
+    ],
+    "18. Punto de control — Verificar compilación completa": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344798
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412512372
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412710477
+      }
+    ],
+    "19.1 Crear `Backend/src/__tests__/property/hashService.property.test.ts` — Propiedad 1: Round-Trip Hash/Verify": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344834
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411474742
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411897087
+      }
+    ],
+    "19.2 Crear `Backend/src/__tests__/property/tokenService.property.test.ts` — Propiedad 2: Round-Trip Firma/Verificación JWT": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344868
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411477109
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411899664
+      }
+    ],
+    "19.3 Crear `Backend/src/__tests__/property/roomEventHandler.property.test.ts` — Propiedades 3 y 4": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344903
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411479504
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411902284
+      }
+    ],
+    "19.4 Crear `Backend/src/__tests__/property/gameEventHandler.property.test.ts` — Propiedad 5: Alternancia de Turno": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344938
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411482058
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411904971
+      }
+    ],
+    "19.5 Crear `Backend/src/__tests__/property/authService.property.test.ts` — Propiedades 6 y 7": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407344992
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411484565
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411907613
+      }
+    ],
+    "20.1 Crear `Backend/ARQUITECTURA.md` con las tres secciones requeridas:": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407345022
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411487160
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412022352
+      }
+    ],
+    "21.1 Ejecutar `npx tsc --noEmit` en `Backend/` y confirmar salida sin errores": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407345064
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412025048
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412415375
+      }
+    ],
+    "21.2 Ejecutar `npx jest --runInBand --passWithNoTests` en `Backend/` y confirmar que todos los tests (unitarios y de propiedades) pasan": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407345096
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412027889
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412418492
+      }
+    ],
+    "21.3 Verificar que los contratos públicos del frontend no se han modificado: `POST /api/auth/register`, `POST /api/auth/login`, `create_room`, `join_room`, `game_event`, `end_turn` mantienen sus firmas originales": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407345129
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412031146
+      },
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412421736
+      }
+    ],
+    "1. Configurar TypeScript y actualizar package.json": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407448547
+      }
+    ],
+    "2. Crear DTOs": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407803127
+      }
+    ],
+    "3. Crear interfaces": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407869452
+      }
+    ],
+    "4. Crear `UserEntity`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407950455
+      }
+    ],
+    "5. Migrar configuración de base de datos a TypeScript": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789407953742
+      }
+    ],
+    "6. Migrar modelos Sequelize a TypeScript": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409508935
+      }
+    ],
+    "8. Implementar `BcryptHashService`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409568129
+      }
+    ],
+    "7. Implementar `SequelizeUserRepository`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409946246
+      }
+    ],
+    "9. Implementar `JwtTokenService`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789409950730
+      }
+    ],
+    "10. Implementar `AuthService`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410020213
+      }
+    ],
+    "11. Implementar controladores HTTP": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410101008
+      }
+    ],
+    "12. Crear Composition Root Auth": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410104289
+      }
+    ],
+    "14. Implementar `BaseEventHandler`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410502120
+      }
+    ],
+    "15. Implementar `RoomEventHandler`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410544356
+      }
+    ],
+    "16. Implementar `GameEventHandler`": [
+      {
+        "executionId": "3a90f773-4fe3-408f-9fee-ef810ced0eae",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789410547576
+      }
+    ],
+    "19. Escribir property tests con fast-check": [
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789411907663
+      }
+    ],
+    "20. Generar `Backend/ARQUITECTURA.md`": [
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412022391
+      }
+    ],
+    "21. Verificación final": [
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412421768
+      }
+    ],
+    "17. Actualizar `src/server.ts` (Composition Root Socket)": [
+      {
+        "executionId": "efa7c395-d69f-4c30-96ed-bf90e2b6dabe",
+        "chatSessionId": "sess_d547901b-a9ca-4921-9bbd-a6f4c045efb9",
+        "timestamp": 1789412509589
+      }
+    ]
+  }
+}

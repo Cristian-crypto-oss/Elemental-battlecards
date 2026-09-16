@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquitectura Backend con POO y SOLID — Elemental Battlecards</title>
+  
+  <!-- Tipografías Oficiales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Capa de Estilos Modular Separada -->
+  <link rel="stylesheet" href="./css/presentation.css">
+</head>
+<body data-theme="light">
+
+  <!-- Encabezado de la Aplicación -->
+  <header>
+    <div class="brand-meta">
+      <div class="badge-gamma">
+        <span>⚡ ADSO 3172526</span>
+      </div>
+      <div class="header-info">
+        Elemental Battlecards · Sustentación Backend POO &amp; SOLID
+      </div>
+    </div>
+
+    <div class="controls-group">
+      <button class="btn-tool" id="btnThemeToggle" title="Alternar entre tema Claro (Gamma) y Oscuro">
+        🌓 Tema <span id="themeLabel">Oscuro</span>
+      </button>
+      <button class="btn-tool" id="btnSpeakerNotes" title="Atajo: Tecla N">
+        🗣️ Guión de Exposición <span style="opacity: 0.6; font-size:0.75rem;">(N)</span>
+      </button>
+      <button class="btn-tool" id="btnFullscreen" title="Atajo: Tecla F">
+        ⛶ Pantalla Completa <span style="opacity: 0.6; font-size:0.75rem;">(F)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Escenario de la Presentación -->
+  <main>
+    <div class="presentation-container">
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 1: PORTADA & DATOS (Página 1 PDF)                   -->
+      <!-- ======================================================== -->
+      <section class="slide active" data-slide="1">
+        <div class="row-split">
+          <div class="col-left img-center">
+            <img src="./assets/images/server-rack.svg" alt="Servidores 3D Isométricos" class="illustration-img" style="max-height: 350px;">
+          </div>
+
+          <div class="col-right">
+            <h1 class="slide-title">Arquitectura Empresarial de Backend con POO y Principios SOLID</h1>
+            <p class="slide-subtitle" style="font-size: 1.1rem; margin-bottom: 24px;">
+              Refactorización Modular del Proyecto Formativo <em>Elemental Battlecards</em>
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px;">
+              <div style="background: #0f172a; color: #ffffff; border-radius: 12px; padding: 18px 20px;">
+                <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8; margin-bottom: 6px;">
+                  Estudiante
+                </div>
+                <div style="font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; color: #f8fafc;">
+                  Cristian Rafael Vargas
+                </div>
+                <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 2px;">
+                  Análisis y Desarrollo de Software (ADSO)
+                </div>
+                <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 600;">
+                  Ficha: 3172526
+                </div>
+              </div>
+
+              <div class="card-gamma" style="padding: 18px 20px;">
+                <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 6px;">
+                  Stack Técnico
+                </div>
+                <div style="font-size: 0.88rem; line-height: 1.5; color: var(--text-main); font-weight: 500;">
+                  Node.js · TypeScript · Express · Socket.IO<br>
+                  Sequelize (SQLite / PostgreSQL) · Jest
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 2: PROTOCOLO OFICIAL (Página 2 PDF)                 -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="2">
+        <div class="slide-eyebrow">Criterios de Evaluación</div>
+        <h2 class="slide-title">Protocolo Oficial de la Sustentación</h2>
+        <p class="slide-subtitle">Estructura estricta de evaluación técnica en 20 minutos según la guía del taller</p>
+
+        <div class="process-bar">
+          <div class="process-step">
+            <div class="step-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <div class="step-badge">Fase 1 (5 Minutos)</div>
+            <div class="step-title">Defensa de Arquitectura</div>
+            <div class="step-desc">Diagrama de Arquitectura + Diagrama de Clases UML + Estructura de carpetas.</div>
+          </div>
+
+          <div class="process-step" style="border-left: 3px solid var(--primary);">
+            <div class="step-icon" style="color: var(--accent-cyan);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="step-badge" style="color: var(--accent-cyan);">Fase 2 (10 Minutos)</div>
+            <div class="step-title">Auditoría de Código en Vivo</div>
+            <div class="step-desc">Polimorfismo en ejecución, SRP en capas y DIP en constructor en líneas exactas del IDE.</div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-icon" style="color: var(--accent-amber);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            </div>
+            <div class="step-badge" style="color: var(--accent-amber);">Fase 3 (5 Minutos)</div>
+            <div class="step-title">Resolución de Escenarios OCP</div>
+            <div class="step-desc">Simulación de requerimientos de cambio sin modificar código existente.</div>
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">
+          Criterios Clave de Aprobación
+        </h4>
+        <div class="grid-3-cols">
+          <div class="card-gamma">
+            <h4 style="color: var(--primary);">Alineación UML-Código</h4>
+            <p>Correspondencia milimétrica entre diagramas y TypeScript.</p>
+          </div>
+          <div class="card-gamma">
+            <h4 style="color: var(--accent-emerald);">Bajo Acoplamiento</h4>
+            <p>Ausencia de operadores <code>new</code> en módulos de alto nivel.</p>
+          </div>
+          <div class="card-gamma">
+            <h4 style="color: var(--accent-blue);">Dominio Técnico</h4>
+            <p>Uso de vocabulario formal: contratos, abstracción, cohesión, sustitución.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 3: ARQUITECTURA EN CAPAS (Página 3 PDF)             -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="3">
+        <h2 class="slide-title">Defensa de la Arquitectura en Capas Verticales</h2>
+        <p class="slide-subtitle">Flujo Unidireccional y Puntos de Composición</p>
+
+        <div class="row-split" style="align-items: flex-start;">
+          <div class="col-left">
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;">Principios Estructurales</h3>
+            
+            <div style="margin-bottom: 18px;">
+              <h4 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Dirección única de dependencias</h4>
+              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+                Los controladores conocen servicios; los servicios conocen contratos de repositorios; nunca a la inversa.
+              </p>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+              <h4 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Composition Roots aislados</h4>
+              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+                <code>authRoutes.ts</code> y <code>server.ts</code> son los únicos lugares donde se instancian clases concretas.
+              </p>
+            </div>
+
+            <div>
+              <h4 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Dos subsistemas integrados</h4>
+              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+                Módulo Auth (arquitectura multicapa para HTTP) y Módulo Socket (herencia polimórfica en tiempo real).
+              </p>
+            </div>
+          </div>
+
+          <div class="col-right">
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;">Estructura de Capas</h3>
+            <div class="stepped-layers">
+              <div class="layer-row" style="width: 70%;">
+                <div class="layer-num">1</div>
+                <div>
+                  <div class="layer-name">Controllers</div>
+                  <div class="layer-desc">Manejo HTTP</div>
+                </div>
+              </div>
+              <div class="layer-row" style="width: 77%;">
+                <div class="layer-num">2</div>
+                <div>
+                  <div class="layer-name">Services</div>
+                  <div class="layer-desc">Lógica de negocio</div>
+                </div>
+              </div>
+              <div class="layer-row" style="width: 85%;">
+                <div class="layer-num">3</div>
+                <div>
+                  <div class="layer-name">Repositories</div>
+                  <div class="layer-desc">Persistencia</div>
+                </div>
+              </div>
+              <div class="layer-row" style="width: 92%;">
+                <div class="layer-num">4</div>
+                <div>
+                  <div class="layer-name">Interfaces / DTOs</div>
+                  <div class="layer-desc">Contratos desacoplados</div>
+                </div>
+              </div>
+              <div class="layer-row" style="width: 100%;">
+                <div class="layer-num">5</div>
+                <div>
+                  <div class="layer-name">Entities</div>
+                  <div class="layer-desc">Encapsulamiento puro</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 4: DIAGRAMA DE CLASES UML (Página 4 PDF)            -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="4">
+        <h2 class="slide-title">Diagrama de Clases (UML) del Backend</h2>
+        <p class="slide-subtitle">Modelado de Interfaces, Implementaciones y Jerarquías</p>
+
+        <div class="row-split" style="align-items: center;">
+          <div class="col-left img-center">
+            <div class="card-gamma" style="padding: 14px; width: 100%; display: flex; justify-content: center;">
+              <img src="./assets/images/uml-diagram.svg" alt="Diagrama UML" class="illustration-img" style="max-height: 330px;">
+            </div>
+          </div>
+
+          <div class="col-right">
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;">
+              5 Interfaces Segregadas (Contratos Puros)
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div class="card-gamma" style="padding: 14px 16px; border-left: 3px solid var(--primary);">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 2px;">IUserRepository</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">findByEmail, findByUsername, create</div>
+              </div>
+
+              <div class="card-gamma" style="padding: 14px 16px; border-left: 3px solid var(--primary);">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 2px;">IAuthService</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">register, login</div>
+              </div>
+
+              <div class="card-gamma" style="padding: 14px 16px; border-left: 3px solid var(--accent-cyan);">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 2px;">IHashService</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">hash, compare</div>
+              </div>
+
+              <div class="card-gamma" style="padding: 14px 16px; border-left: 3px solid var(--accent-cyan);">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 2px;">ITokenService</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted);">sign, verify</div>
+              </div>
+            </div>
+
+            <div class="card-gamma" style="padding: 14px 16px; margin-top: 14px; border-left: 3px solid var(--accent-emerald);">
+              <div style="font-weight: 700; color: var(--text-main); margin-bottom: 2px;">IController</div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">handle(req, res)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 5: ABSTRACCIÓN Y ENCAPSULAMIENTO (Página 5 PDF)      -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="5">
+        <h2 class="slide-title">Pilares POO: Abstracción y Encapsulamiento</h2>
+        <p class="slide-subtitle">Ocultamiento de Detalles y Contratos Desacoplados</p>
+
+        <div class="row-split" style="align-items: flex-start;">
+          <div class="col-left">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">
+              1. Abstracción — Definir el "QUÉ" sin atarse al "CÓMO"
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--primary); font-weight: 600; margin-bottom: 8px;">
+              Archivo: <code>src/interfaces/IHashService.ts</code>
+            </p>
+            <ul style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; padding-left: 18px;">
+              <li>No menciona <code>bcrypt</code>, ni número de salt rounds, ni algoritmos criptográficos.</li>
+              <li>El servicio solo sabe que puede hashear y comparar.</li>
+            </ul>
+
+            <div class="code-snippet">
+<span class="kw">export interface</span> <span class="type">IHashService</span> {
+  <span class="fn">hash</span>(plain: <span class="type">string</span>): <span class="type">Promise</span>&lt;<span class="type">string</span>&gt;;
+  <span class="fn">compare</span>(plain: <span class="type">string</span>, hashed: <span class="type">string</span>): <span class="type">Promise</span>&lt;<span class="type">boolean</span>&gt;;
+}
+            </div>
+          </div>
+
+          <div class="col-right">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">
+              2. Encapsulamiento — Protección Inmutable del Estado
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--accent-emerald); font-weight: 600; margin-bottom: 8px;">
+              Archivo: <code>src/entities/UserEntity.ts</code>
+            </p>
+            <ul style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; padding-left: 18px;">
+              <li>Modificadores <code>private readonly</code> en todos los campos.</li>
+              <li>Exclusividad de getters para acceso de lectura.</li>
+              <li>Nadie puede mutar ni sobreescribir la entidad una vez instanciada.</li>
+              <li>La entidad es completamente inmutable.</li>
+            </ul>
+
+            <div class="code-snippet">
+<span class="kw">class</span> <span class="type">UserEntity</span> {
+  <span class="kw">private readonly</span> _id: <span class="type">number</span>;
+  <span class="kw">private readonly</span> _email: <span class="type">string</span>;
+  <span class="kw">get</span> <span class="fn">id</span>() { <span class="kw">return this</span>._id; }
+  <span class="kw">get</span> <span class="fn">email</span>() { <span class="kw">return this</span>._email; }
+}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 6: HERENCIA Y POLIMORFISMO (Página 6 PDF)           -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="6">
+        <h2 class="slide-title">Pilares POO: Herencia y Polimorfismo Dinámico</h2>
+        <p class="slide-subtitle">Reutilización de Código y Resolución Dinámica de Tipos</p>
+
+        <div class="row-split" style="align-items: flex-start;">
+          <div class="col-left" style="flex: 0.9;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 4px;">
+              3. Herencia — Relación Lógica "Es-Un"
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--primary); font-weight: 600; margin-bottom: 8px;">
+              Archivo Base: <code>src/socket/BaseEventHandler.ts</code>
+            </p>
+            <ul style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 12px; padding-left: 16px;">
+              <li><strong>Subclases:</strong> <code>RoomEventHandler.ts</code> y <code>GameEventHandler.ts</code></li>
+              <li>Reutilizan el constructor (<code>io</code>, <code>rooms</code>) y métodos utilitarios compartidos (<code>emitToRoom</code>, <code>getRoomOrFail</code>).</li>
+              <li>Sin duplicar ni una sola línea de código.</li>
+            </ul>
+          </div>
+
+          <div class="col-right" style="flex: 1.1;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 4px;">
+              4. Polimorfismo de Subtipo en Ejecución
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 8px;">
+              Archivo: <code>src/server.ts</code> (Líneas 63–72)
+            </p>
+            <ul style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 10px; padding-left: 16px;">
+              <li><strong>Tipo estático:</strong> <code>BaseEventHandler[]</code> — TypeScript solo ve la abstracción base.</li>
+              <li><strong>Objetos concretos:</strong> <code>RoomEventHandler</code> y <code>GameEventHandler</code> instanciados en el array.</li>
+              <li><strong>Invocación polimórfica:</strong> el runtime despacha el método de la subclase correspondiente.</li>
+              <li>Mismo método, comportamiento completamente distinto según el tipo real.</li>
+            </ul>
+
+            <div class="code-snippet">
+<span class="kw">const</span> handlers: <span class="type">BaseEventHandler[]</span> = [
+  <span class="kw">new</span> <span class="type">RoomEventHandler</span>(io, rooms),
+  <span class="kw">new</span> <span class="type">GameEventHandler</span>(io, rooms),
+];
+handlers.<span class="fn">forEach</span>(h =&gt; h.<span class="fn">registerEvents</span>(socket));
+            </div>
+          </div>
+
+          <div class="img-center" style="width: 140px;">
+            <img src="./assets/images/socket-tree.svg" alt="Jerarquía de Sockets" class="illustration-img" style="max-height: 200px;">
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 7: SRP RESPONSABILIDAD UNICA (Página 7 PDF)         -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="7">
+        <h2 class="slide-title">Principio SOLID: Responsabilidad Única (SRP)</h2>
+        <p class="slide-subtitle">Una Sola Razón para Cambiar por Cada Capa</p>
+
+        <div class="img-center" style="margin-bottom: 20px;">
+          <img src="./assets/images/concentric-circles.svg" alt="Círculos Concéntricos SRP" class="illustration-img" style="max-height: 220px;">
+        </div>
+
+        <div class="grid-3-cols">
+          <div class="card-gamma">
+            <h4>RegisterController</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;">
+              Razón de cambio: El protocolo de transporte HTTP
+            </div>
+            <p>Solo valida formato HTTP y delega inmediatamente al servicio. Cero lógica de hash, cero SQL.</p>
+          </div>
+
+          <div class="card-gamma">
+            <h4>AuthService</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 6px;">
+              Razón de cambio: Reglas de negocio del dominio
+            </div>
+            <p>Valida existencia, pide hash, crea usuario, genera token. No sabe qué es <code>req</code> ni <code>res</code>. Si migramos a gRPC o WebSockets, permanece intacto.</p>
+          </div>
+
+          <div class="card-gamma">
+            <h4>SequelizeUserRepository</h4>
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent-emerald); margin-bottom: 6px;">
+              Razón de cambio: La tecnología de persistencia
+            </div>
+            <p>Única clase que importa Sequelize y ejecuta consultas SQL. Encapsula toda la lógica de acceso a datos.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 8: DIP Y COMPOSITION ROOT (Página 8 PDF)            -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="8">
+        <h2 class="slide-title">Principio SOLID: Inversión de Dependencias (DIP)</h2>
+        <p class="slide-subtitle">Inyección por Constructor y Aislamiento del Operador new</p>
+
+        <div class="row-split" style="align-items: flex-start;">
+          <div class="col-left">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">
+              1. Inyección de Dependencias por Constructor
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--primary); font-weight: 600; margin-bottom: 8px;">
+              Archivo: <code>src/services/AuthService.ts</code>
+            </p>
+            <ul style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; padding-left: 18px;">
+              <li>Todos los campos son de tipo interfaz (<code>IUserRepository</code>, <code>IHashService</code>, <code>ITokenService</code>).</li>
+              <li>Recibe todas sus dependencias ya instanciadas en su constructor.</li>
+              <li>Los módulos de alto nivel dependen de abstracciones, nunca de módulos de bajo nivel.</li>
+            </ul>
+
+            <div class="code-snippet">
+<span class="kw">class</span> <span class="type">AuthService</span> <span class="kw">implements</span> <span class="type">IAuthService</span> {
+  <span class="kw">constructor</span>(
+    <span class="kw">private</span> repo: <span class="type">IUserRepository</span>,
+    <span class="kw">private</span> hash: <span class="type">IHashService</span>,
+    <span class="kw">private</span> token: <span class="type">ITokenService</span>
+  ) {}
+}
+            </div>
+          </div>
+
+          <div class="col-right">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">
+              2. Composition Root — El Único Lugar donde Existen los new
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--accent-emerald); font-weight: 600; margin-bottom: 8px;">
+              Archivo: <code>src/routes/authRoutes.ts</code>
+            </p>
+            <ul style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; padding-left: 18px;">
+              <li>Ensamblaje centralizado del grafo de dependencias.</li>
+              <li>Instanciación de <code>SequelizeUserRepository</code>, <code>BcryptHashService</code>, <code>JwtTokenService</code>.</li>
+              <li>Inyección en <code>AuthService</code> y controladores.</li>
+              <li>Cumplimiento al 100% del criterio de bajo acoplamiento.</li>
+            </ul>
+
+            <div class="callout-box" style="margin-top: 24px;">
+              <div style="font-weight: 700; margin-bottom: 4px;">📌 Regla de Oro Arquitectónica:</div>
+              El operador <code>new</code> aparece exclusivamente en el <strong>Composition Root</strong> — nunca en módulos de alto nivel.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 9: OCP, LSP, ISP GARANTIZADOS (Página 9 PDF)        -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="9">
+        <h2 class="slide-title">Principios OCP, LSP e ISP Garantizados</h2>
+        <p class="slide-subtitle">Extensibilidad, Sustituibilidad y Segregación de Interfaces</p>
+
+        <div class="grid-3-cols">
+          <div class="card-gamma" style="border-left: 4px solid var(--primary);">
+            <h4>Open/Closed Principle (OCP)</h4>
+            <p style="margin-bottom: 10px;">
+              Para cambiar el motor de hashing de bcrypt a Argon2, no modificamos <code>AuthService</code>. Simplemente creamos <code>Argon2HashService implements IHashService</code>. En <code>authRoutes.ts</code> cambiamos una sola línea.
+            </p>
+            <strong style="color: var(--text-main); font-size: 0.85rem;">
+              El sistema está abierto para extensión pero cerrado para modificación.
+            </strong>
+          </div>
+
+          <div class="card-gamma" style="border-left: 4px solid var(--accent-cyan);">
+            <h4>Liskov Substitution Principle (LSP)</h4>
+            <p>
+              Cualquier subtipo puede sustituir al supertipo sin romper el sistema. <code>SequelizeUserRepository</code> es sustituido por un objeto mock en pruebas unitarias. El servicio funciona exactamente igual y pasa los <strong>38 tests sin quejarse</strong>.
+            </p>
+          </div>
+
+          <div class="card-gamma" style="border-left: 4px solid var(--accent-emerald);">
+            <h4>Interface Segregation Principle (ISP)</h4>
+            <p>
+              5 interfaces pequeñas y especializadas en vez de una interfaz monolítica. <code>BcryptHashService</code> no se ve obligado a conocer tokens ni bases de datos.
+            </p>
+          </div>
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat-item">
+            <div class="stat-num" style="color: var(--primary);">5</div>
+            <div class="stat-title">Interfaces segregadas</div>
+            <div class="stat-subtitle">Contratos puros y especializados</div>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-num" style="color: var(--accent-cyan);">38</div>
+            <div class="stat-title">Tests aprobados</div>
+            <div class="stat-subtitle">Cobertura garantizada por LSP</div>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-num" style="color: var(--accent-emerald);">1</div>
+            <div class="stat-title">Línea a cambiar</div>
+            <div class="stat-subtitle">Para extender cualquier módulo (OCP)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 10: ESCENARIOS DE ESCALABILIDAD (Página 10 PDF)      -->
+      <!-- ======================================================== -->
+      <section class="slide" data-slide="10">
+        <h2 class="slide-title">Resolución de Escenarios de Escalabilidad (Fase 3)</h2>
+        <p class="slide-subtitle">Respuestas Técnicas Inmediatas a Cambios de Requerimientos</p>
+
+        <div class="row-split" style="align-items: flex-start;">
+          <div class="col-left img-center" style="flex: 0.8;">
+            <img src="./assets/images/cloud-server.svg" alt="Escalabilidad en la Nube" class="illustration-img" style="max-height: 280px;">
+          </div>
+
+          <div class="col-right" style="flex: 1.2;">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              
+              <div class="card-gamma" style="padding: 16px 20px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                  <span style="font-size: 1.1rem;">📱</span>
+                  <h4 style="font-size: 0.98rem; margin: 0;">¿Login con Google OAuth?</h4>
+                </div>
+                <p style="font-size: 0.86rem; line-height: 1.45;">
+                  Ninguna clase existente se altera. Creamos <code>GoogleAuthService implements IAuthService</code>. En <code>authRoutes.ts</code> montamos la ruta <code>/google</code> e inyectamos el nuevo servicio. Los controladores y el modelo de usuario permanecen intactos.
+                </p>
+              </div>
+
+              <div class="card-gamma" style="padding: 16px 20px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                  <span style="font-size: 1.1rem;">🗄️</span>
+                  <h4 style="font-size: 0.98rem; margin: 0;">¿SQLite → PostgreSQL o MongoDB?</h4>
+                </div>
+                <p style="font-size: 0.86rem; line-height: 1.45;">
+                  Para PostgreSQL, <code>SequelizeUserRepository</code> ya está listo: solo cambiamos la variable de entorno. Para MongoDB, creamos <code>MongoUserRepository implements IUserRepository</code>. Cambiamos una línea en <code>authRoutes.ts</code>. <code>AuthService</code> ni siquiera sabe qué motor guarda la información.
+                </p>
+              </div>
+
+              <div class="card-gamma" style="padding: 16px 20px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                  <span style="font-size: 1.1rem;">💬</span>
+                  <h4 style="font-size: 0.98rem; margin: 0;">¿Chat o Torneos?</h4>
+                </div>
+                <p style="font-size: 0.86rem; line-height: 1.45;">
+                  Creamos <code>ChatEventHandler extends BaseEventHandler</code> y <code>TournamentEventHandler extends BaseEventHandler</code>. Implementamos <code>registerEvents(socket)</code>. En <code>server.ts</code> agregamos una sola línea al array <code>handlers</code>. El ciclo <code>forEach</code> polimórfico lo registrará automáticamente.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Panel Deslizante de Notas del Orador -->
+  <aside class="speaker-drawer" id="speakerDrawer">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <span>🗣️ Guión de Exposición para Cristian</span>
+      </div>
+      <button class="btn-tool" id="btnCloseDrawer" style="padding: 2px 8px;">✕</button>
+    </div>
+    <div class="drawer-content" id="drawerContent">
+      <!-- Inyectado dinámicamente desde js/speaker-notes.js -->
+    </div>
+  </aside>
+
+  <!-- Barra de Navegación Inferior -->
+  <footer>
+    <div class="footer-left">
+      <span>Diapositiva <strong id="lblSlideCurrent">1</strong> de <strong id="lblSlideTotal">10</strong></span>
+    </div>
+
+    <div class="dots-nav" id="dotsContainer"></div>
+
+    <div class="nav-actions">
+      <button class="btn-slide-nav" id="btnPrev">← Anterior</button>
+      <button class="btn-slide-nav" id="btnNext">Siguiente →</button>
+    </div>
+  </footer>
+
+  <!-- Scripts Modulares -->
+  <script src="./js/speaker-notes.js"></script>
+  <script src="./js/presentation.js"></script>
+</body>
+</html>

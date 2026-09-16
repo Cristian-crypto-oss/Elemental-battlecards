@@ -1,0 +1,24 @@
+<svg width="180" height="240" viewBox="0 0 180 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Nodo Superior BaseEventHandler -->
+  <rect x="50" y="20" width="80" height="42" rx="8" fill="#1e293b"/>
+  <text x="90" y="46" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" fill="#f8fafc" font-size="11" font-weight="700">Base</text>
+  
+  <!-- Ramas de conexión -->
+  <line x1="90" y1="62" x2="90" y2="110" stroke="#94a3b8" stroke-width="2.5"/>
+  <line x1="35" y1="110" x2="145" y2="110" stroke="#94a3b8" stroke-width="2.5"/>
+  <line x1="35" y1="110" x2="35" y2="145" stroke="#94a3b8" stroke-width="2.5"/>
+  <line x1="145" y1="110" x2="145" y2="145" stroke="#94a3b8" stroke-width="2.5"/>
+
+  <!-- Nodos Hijos -->
+  <rect x="5" y="145" width="65" height="42" rx="8" fill="#334155"/>
+  <text x="37.5" y="171" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" fill="#f8fafc" font-size="10.5" font-weight="700">Room</text>
+
+  <rect x="110" y="145" width="65" height="42" rx="8" fill="#334155"/>
+  <text x="142.5" y="171" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" fill="#f8fafc" font-size="10.5" font-weight="700">Game</text>
+
+  <!-- Indicador Polimórfico en ejecución -->
+  <circle cx="37.5" cy="210" r="5" fill="#38bdf8"/>
+  <circle cx="142.5" cy="210" r="5" fill="#10b981"/>
+  <line x1="37.5" y1="187" x2="37.5" y2="205" stroke="#38bdf8" stroke-width="2" stroke-dasharray="2 2"/>
+  <line x1="142.5" y1="187" x2="142.5" y2="205" stroke="#10b981" stroke-width="2" stroke-dasharray="2 2"/>
+</svg>
